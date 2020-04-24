@@ -10,6 +10,10 @@ pipeline {
       sh 'echo "GITHUB HOOK SUCCESS"'
      }
    }
+   stage('UnitTest'){
+     sh 'ant -f test.xml -v'
+     junit 'reports/result.xml'
+   }
  }
 
  post {
