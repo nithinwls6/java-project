@@ -47,6 +47,15 @@ pipeline {
      sh "java -jar rectangle_${env.BUILD_NUMBER}.jar 4 5"
    }
  }
+ stage("Running on Debiann") {
+   agent {
+     docker 'openjdk:8u121-jre'
+   }
+   steps{
+     sh "wget http://10.3.26.21/rectangles/all/rectangle_${env.BUILD_NUMBER}.jar"
+     sh "java -jar rectangle_${env.BUILD_NUMBER}.jar 8 10"
+   }
+ }
 }
 
 }
