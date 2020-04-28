@@ -31,13 +31,13 @@ pipeline {
    }
 
  stage('Deploy'){
-   agent {
-     label 'apache'
-   }
-   steps{
-     sh "cp dist/rectangle_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/all/"
-   }
- }
+      agent {
+        label 'apache'
+      }
+      steps{
+        sh "cp dist/rectangle_${env.BUILD_NUMBER}.jar /var/www/html/rectangles/all/"
+      }
+    }
  stage("Running on CentOS") {
    agent {
      label 'Dev'
@@ -51,11 +51,10 @@ pipeline {
    agent {
      docker 'openjdk:8u121-jre'
    }
-   steps{
-     sh "wget http://10.3.26.21/rectangles/all/rectangle_${env.BUILD_NUMBER}.jar"
-     sh "java -jar rectangle_${env.BUILD_NUMBER}.jar 8 10"
-   }
- }
-}
-
+      steps{
+        sh "wget http://10.3.26.21/rectangles/all/rectangle_${env.BUILD_NUMBER}.jar"
+        sh "java -jar rectangle_${env.BUILD_NUMBER}.jar 8 10"
+      }
+    }
+  }
 }
