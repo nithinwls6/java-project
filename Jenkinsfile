@@ -13,6 +13,11 @@ pipeline {
       sh 'ant -f build.xml -v'
       sh 'echo "GITHUB HOOK SUCCESS"'
      }
+     post {
+       always{
+         archiveArtifacts artifacts: 'dist/*.jar', fingerprint: true
+       }
+     }
    }
    stage('UnitTest'){
      agent {
@@ -35,7 +40,7 @@ pipeline {
  }
  stage("Running on CentOS") {
    agent {
-     label 'CentOS'
+     label 'Dev'
    }
    steps {
      sh "wget http://10.3.26.21/rectangles/all/rectangle_${env.BUILD_NUMBER}.jar"
@@ -43,9 +48,5 @@ pipeline {
    }
  }
 }
- post {
-   always{
-     archiveArtifacts artifacts: 'dist/*.jar', fingerprint: true
-   }
- }
+
 }
